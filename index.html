@@ -79,6 +79,7 @@
         float:left;
         width:50%;
         height: 60em;
+        
        }
 
        iframe{
@@ -109,8 +110,6 @@
         <textarea id="htmlPanel" class="panel">hello  world</textarea>
         <textarea id="cssPanel" class="panel hidden">color:green</textarea>
         <textarea id="javascriptPanel" class="panel hidden">alert("hi")</textarea>
-
-
         <iframe id="outputPanel" class="panel"></iframe>
 
     </div>
@@ -135,14 +134,22 @@
 
              var panelId=$(this).attr("id")+"Panel";
             
-             let demo=$("#"+panelId).toggle();
-             console.log(demo);
+             $("#"+panelId).toggleClass("hidden");
+
+             var numberOfActivePanels=4-$(".hidden").length
+             console.log("this is number of hidden panels");
+             console.log($(".hidden").length)
+             console.log("this is active panels");
+             console.log(numberOfActivePanels);
+
+             $(".panel").width(($(window).width()/numberOfActivePanels)-15);
+           
             })
 
         //set the height to textarea and iframe corresponding height of header
         $("panel").height($(window).height()-$("#header").height()-15);
         $(".panel").height($(window).height()-$("#header").height()-15);
-        $(".panel").width(($(window).width()/2)-15)
+        $(".panel").width(($(window).width()/2)-15);
 
         //reflect the text of textarea into iframe
 
