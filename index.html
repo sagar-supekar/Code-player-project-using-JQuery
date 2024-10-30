@@ -11,7 +11,7 @@
             font-family: sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+          
         }
 
         #header {
@@ -65,20 +65,21 @@
 
         textarea{
             /* width: 50%; */
-            height: 60em;
+            /* height: 60em; */
             resize: none;
-            border: 1px solid gray;
+            border: 1px solid grey;
             border-top: none;
         }
 
-        #bodyContainer{
+        /* #bodyContainer{
             height: 100%;
-        }
+        } */
 
        .panel{
         float:left;
         width:50%;
-        height: 60em;
+        /* height: 60em; */
+        border-left: none;
         
        }
 
@@ -107,14 +108,19 @@
 
     <div id="bodyContainer">
 
-        <textarea id="htmlPanel" class="panel">hello  world</textarea>
-        <textarea id="cssPanel" class="panel hidden">color:green</textarea>
-        <textarea id="javascriptPanel" class="panel hidden">alert("hi")</textarea>
+        <textarea id="htmlPanel" class="panel"><p id="paragraph"> Hello World!</p></textarea>
+        <textarea id="cssPanel" class="panel hidden">p{color:green}</textarea>
+        <textarea id="javascriptPanel" class="panel hidden">document.getElementById("paragraph").innerHTML = "Hello Web";</textarea>
         <iframe id="outputPanel" class="panel"></iframe>
 
     </div>
 
     <script type="text/javascript">
+        function updateOutput(){
+            $("iframe").contents().find("html").html("<html><head> <style type='text/css'>" + $("#cssPanel").val() + "</style></head> <body>" + $("#htmlPanel").val() + "<body><html>");
+
+                document.getElementById("outputPanel").contentWindow.eval($("#javascriptPanel").val());  
+        }
         
         // button hover and background color chnage
         $(".toggleButton").hover(function () {
@@ -147,16 +153,15 @@
             })
 
         //set the height to textarea and iframe corresponding height of header
-        $("panel").height($(window).height()-$("#header").height()-15);
         $(".panel").height($(window).height()-$("#header").height()-15);
         $(".panel").width(($(window).width()/2)-15);
 
         //reflect the text of textarea into iframe
 
-        $("iframe").contents().find("html").html($("#htmlPanel").val());
+       updateOutput();
 
         $("textarea").on('change keyup paste',function(){
-            $("iframe").contents().find("html").html($("#htmlPanel").val());
+            updateOutput();
         });       
 
    </script>
