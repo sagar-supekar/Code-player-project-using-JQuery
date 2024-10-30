@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="jquery-3.7.1.js"></script>
+    <title>Code player project</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        #header {
+            width: 100%;
+            background-color: #EEEEEE;
+            padding: 5px;
+            height: 100%;
+        }
+
+        #logo {
+            float: left;
+            font-weight: bold;
+            font-size: 120%;
+            padding-top: 5px;
+            padding-left: 5px;
+        }
+
+        #buttonContainer {
+            width: 230px;
+            margin: 0 auto;
+            height: 28px;
+        }
+
+        .toggleButton {
+            float: left;
+            border: 1px solid gray;
+            padding: 4px;
+            border-right: none;
+            font-size: 90%;
+        }
+
+        #html {
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+        }
+
+        #output {
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            border-right: 1px solid gray;
+        }
+
+        .active {
+            background-color: aliceblue;
+
+        }
+
+        .highlightedButton {
+            background-color: grey;
+        }
+
+        textarea{
+            /* width: 50%; */
+            height: 60em;
+            resize: none;
+            border: 1px solid gray;
+            border-top: none;
+        }
+
+        #bodyContainer{
+            height: 100%;
+        }
+
+       .panel{
+        float:left;
+        width:50%;
+        height: 60em;
+       }
+
+       iframe{
+        border:none;
+       }
+
+       .hidden{
+        display: none;
+       }
+    </style>
+</head>
+
+<body>
+    <div id="header">
+        <div id="logo">
+            Code player
+        </div>
+        <div id="buttonContainer">
+            <div class="toggleButton active" id="html">HTML</div>
+            <div class="toggleButton" id="css">css</div>
+            <div class="toggleButton" id="javascript">Javascript</div>
+            <div class="toggleButton active" id="output">OutPut</div>
+        </div>
+    </div>
+
+    <div id="bodyContainer">
+
+        <textarea id="htmlPanel" class="panel">hello  world</textarea>
+        <textarea id="cssPanel" class="panel hidden">color:green</textarea>
+        <textarea id="javascriptPanel" class="panel hidden">alert("hi")</textarea>
+
+
+        <iframe id="outputPanel" class="panel"></iframe>
+
+    </div>
+
+    <script type="text/javascript">
+        
+        // button hover and background color chnage
+        $(".toggleButton").hover(function () {
+            $(this).addClass("highlightedButton");
+        }, function () {
+            $(this).removeClass("highlightedButton");
+        })
+
+        
+        $(".toggleButton").click(function () {
+            $(this).toggleClass("active");
+
+            $(this).removeClass("highlightedButton");
+
+            //when click on the button show particular content
+            // initially get id byusing alert box and then set the code
+
+             var panelId=$(this).attr("id")+"Panel";
+            
+             let demo=$("#"+panelId).toggle();
+             console.log(demo);
+            })
+
+        //set the height to textarea and iframe corresponding height of header
+        $("panel").height($(window).height()-$("#header").height()-15);
+        $(".panel").height($(window).height()-$("#header").height()-15);
+        $(".panel").width(($(window).width()/2)-15)
+
+        //reflect the text of textarea into iframe
+
+        $("iframe").contents().find("html").html($("#htmlPanel").val());
+
+        $("textarea").on('change keyup paste',function(){
+            $("iframe").contents().find("html").html($("#htmlPanel").val());
+        });
+
+   </script>
+</body>
+
+</html>
